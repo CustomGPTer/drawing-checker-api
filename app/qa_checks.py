@@ -1,46 +1,16 @@
 qa_checks = {
-    "pipe_layout": {
-        "description": "Pipe layout shown clearly using polylines or linear entities",
-        "category": "Civils",
-        "CESWI": "Clause 505.1.2",
-        "UUCESWI": "Clause 505.1.2 – Use LWPOLYLINE for pipe alignment overlays",
-        "BestPractice": "Use distinct layers and continuous line types for pipe alignment",
-        "diagnostic": {
-            "likely_cause": "Pipe layout not created or not exported correctly",
-            "risk": "Incorrect pipe routing on site",
-            "fix": [
-                "Ensure all pipe runs are LWPOLYLINE type",
-                "Use a dedicated pipe layout layer"
-            ]
-        }
-    },
-    "invert_levels": {
-        "description": "Invert and cover levels shown at every MH or pipe run",
+    "cover_invert_levels": {
+        "description": "Cover and invert levels shown at every manhole or pipe run",
         "category": "Civils",
         "CESWI": "Clause 505.3.1",
-        "UUCESWI": "Clause 505.3.1 – All MHs must show cover + invert levels",
-        "BestPractice": "Show both IL and CL on plan and long section",
+        "UUCESWI": "Clause 505.3.1 – All manholes must show cover and invert levels",
+        "BestPractice": "Show both IL (invert level) and CL (cover level) on plan and section views",
         "diagnostic": {
-            "likely_cause": "Omitted from drawing or incorrect layer naming",
-            "risk": "Incorrect excavation depth or backfall",
+            "likely_cause": "Invert or cover level annotation omitted or on wrong layer",
+            "risk": "Incorrect excavation depth or pipe fall leading to build errors",
             "fix": [
                 "Label IL and CL at every chamber and pipe end",
-                "Ensure layer name includes 'INV'"
-            ]
-        }
-    },
-    "drawing_status": {
-        "description": "Drawing is marked as 'For Construction', 'For Info', etc.",
-        "category": "General",
-        "CESWI": "Clause 130.1",
-        "UUCESWI": "Clause 130.1 – Construction drawings must be clearly marked",
-        "BestPractice": "Title block should always show revision and status",
-        "diagnostic": {
-            "likely_cause": "CAD export from wrong version or missing notes",
-            "risk": "Wrong drawing used on site",
-            "fix": [
-                "Add revision and status to drawing frame",
-                "Ensure ‘FOR CONSTRUCTION’ is clearly marked"
+                "Ensure invert levels are on a visible layer or style"
             ]
         }
     },
@@ -49,13 +19,13 @@ qa_checks = {
         "category": "Civils",
         "CESWI": "Clause 505.3.1",
         "UUCESWI": "Addendum A – Type B bedding required under roads",
-        "BestPractice": "Reference UU STD Detail 6101 or CIRIA C689",
+        "BestPractice": "Reference UU standard detail 6101 or CIRIA C689 for bedding",
         "diagnostic": {
             "likely_cause": "Bedding note or section omitted",
-            "risk": "Incorrect bedding leads to pipe deformation",
+            "risk": "Incorrect bedding leads to pipe deformation or failure",
             "fix": [
-                "Include general note: 'Pipe bedding per CESWI Type B'",
-                "Add typical bedding detail cross-section"
+                "Include general note 'Pipe bedding per CESWI Type B'",
+                "Add a typical bedding detail section or note"
             ]
         }
     },
@@ -63,394 +33,440 @@ qa_checks = {
         "description": "Flow direction clearly indicated along all pipe runs",
         "category": "Civils",
         "CESWI": "Clause 502.1.2",
-        "UUCESWI": "Noted in section 5 of UUCESWI",
-        "BestPractice": "Arrows every 10–15m on plan view",
+        "UUCESWI": "Noted in CESWI Section 5 – flow direction arrows required",
+        "BestPractice": "Place arrows every 10–15m along the pipe run on plan",
         "diagnostic": {
             "likely_cause": "Flow arrows not inserted or layer turned off",
-            "risk": "Incorrect pipe fall direction during install",
+            "risk": "Incorrect pipe fall direction during install causing flow issues",
             "fix": [
-                "Add flow arrows on plan and section views",
-                "Use a dedicated layer for flow direction"
+                "Add flow direction arrows on plan and section views",
+                "Use a dedicated layer for flow arrows"
             ]
         }
     },
-    "chamber_refs": {
-        "description": "Chamber references match layout and MH schedule",
+    "chamber_references": {
+        "description": "Chamber references match layout and manhole schedule",
         "category": "Civils",
         "CESWI": "Clause 505.4.1",
-        "UUCESWI": "Match manhole numbering to schedule",
-        "BestPractice": "Use unique MH IDs on plan and long section",
+        "UUCESWI": "Match manhole numbering to MH schedule",
+        "BestPractice": "Use unique manhole IDs on plan, section, and schedule",
         "diagnostic": {
-            "likely_cause": "Mismatch between layout and schedule",
+            "likely_cause": "Mismatch between drawing and MH schedule references",
             "risk": "Wrong chamber constructed in wrong location",
             "fix": [
-                "Check chamber IDs align with MH schedule",
-                "Review layout against MH numbering system"
+                "Verify chamber IDs align with MH schedule and site plan",
+                "Correct any discrepancies between drawing and schedule"
             ]
         }
     },
-    "reinforcement": {
-        "description": "Reinforcement details shown for slabs, walls, or pads",
+    "wall_slab_thickness": {
+        "description": "Wall, slab, and foundation thicknesses are shown and labelled",
+        "category": "Civils",
+        "CESWI": "Clause 505.5.1",
+        "UUCESWI": "Refer to structural detail notes in civils package",
+        "BestPractice": "Label all wall, slab, and foundation thicknesses on drawings",
+        "diagnostic": {
+            "likely_cause": "Thicknesses omitted or inherited from generic template",
+            "risk": "Structures may be under/over-designed or clash with other elements",
+            "fix": [
+                "Annotate thickness on section views and plan callouts",
+                "Cross-check with structural drawings for consistency"
+            ]
+        }
+    },
+    "reinforcement_details": {
+        "description": "Reinforcement details shown for slabs, walls, or concrete pads",
         "category": "Civils",
         "CESWI": "Clause 502.3.2",
         "UUCESWI": "Refer to RC detailing notes in civils package",
-        "BestPractice": "Use B-series rebar callouts and show bar schedules",
+        "BestPractice": "Use B-series rebar callouts and show bar schedules on drawings",
         "diagnostic": {
-            "likely_cause": "Missing bar markups or RC overlay",
-            "risk": "Incorrect steelwork during pour",
+            "likely_cause": "Missing bar marks or reinforcement overlay in CAD",
+            "risk": "Incorrect rebar placement or quantity causing structural issues",
             "fix": [
-                "Add rebar layout with bar marks",
-                "Reference to bar schedule and spacing"
+                "Add rebar layout with bar marks and spacing notes",
+                "Include reference to bar schedule for each element"
             ]
         }
     },
-    "pipe_material": {
-        "description": "Pipe material and jointing clearly labelled",
+    "pipe_sizes_and_materials": {
+        "description": "Pipe sizes, material, and jointing are clearly labelled",
         "category": "Civils",
         "CESWI": "Clause 505.2.1",
-        "UUCESWI": "Use UU-approved materials (e.g. DI, uPVC)",
-        "BestPractice": "Add material callout with pipe size and class",
+        "UUCESWI": "Use UU-approved materials (e.g., DI, uPVC)",
+        "BestPractice": "Add callouts like 'Ø150 DI PN16 w/ flange joints' on plan",
         "diagnostic": {
-            "likely_cause": "Generic line used with no annotation",
-            "risk": "Wrong pipe type or incorrect pressure class",
+            "likely_cause": "Generic pipe lines used with no annotation",
+            "risk": "Wrong pipe type or joint may be used on site",
             "fix": [
-                "Add callouts like '100mm DI PN16 with flange joint'",
-                "Match symbols to material legend"
+                "Label each pipe with size, material, and joint type",
+                "Ensure symbol legends match the annotated materials"
             ]
         }
     },
     "access_ladders": {
-        "description": "Access ladders/platforms provided for deep chambers",
-        "category": "Access",
+        "description": "Access ladders or platforms provided for deep chambers or structures",
+        "category": "Civils",
         "CESWI": "Clause 509.4.3",
-        "UUCESWI": "Comply with working at height procedures",
-        "BestPractice": "Show permanent or temporary ladders for access >1.5m",
+        "UUCESWI": "Comply with working-at-height procedures",
+        "BestPractice": "Show permanent ladders for access >1.5m depth",
         "diagnostic": {
-            "likely_cause": "Access omitted from structural layout",
-            "risk": "Unsafe entry into chamber or void",
+            "likely_cause": "Ladders/platforms omitted from drawing",
+            "risk": "Unsafe entry or exit into deep chambers on site",
             "fix": [
                 "Add fixed ladder to sections deeper than 1.2m",
-                "Include detail for platform or handhold"
+                "Include platform or handhold detail where required"
             ]
         }
     },
-    "penetrations": {
-        "description": "All M&E penetrations shown and coordinated",
-        "category": "Coordination",
-        "CESWI": "Clause 502.2.4",
-        "UUCESWI": "All penetrations must be sleeved and waterproofed",
-        "BestPractice": "Use standard sleeve size 2x pipe OD",
+    "maintenance_access": {
+        "description": "Chambers, covers, and equipment are accessible for lifting and maintenance",
+        "category": "Civils",
+        "CESWI": "Clause 509.3.1",
+        "UUCESWI": "Ensure 1m clearance around maintainable equipment",
+        "BestPractice": "Maintain clear 1m zones around access hatches and equipment",
         "diagnostic": {
-            "likely_cause": "M&E and civils not coordinated",
-            "risk": "Late rework or concrete breakout",
+            "likely_cause": "Maintenance access not considered in layout",
+            "risk": "Difficult or unsafe maintenance operations on site",
             "fix": [
-                "Overlay M&E routes onto civils and add sleeves",
-                "Include cast-in penetration detail"
+                "Draw 1m clearance around maintainable equipment and hatches",
+                "Add note 'Maintain clear access for operatives'"
             ]
         }
     },
-      "valve_positions": {
-        "description": "Valves located logically for isolation and maintenance",
-        "category": "Mechanical",
-        "CESWI": "Clause 508.2.1",
-        "UUCESWI": "Isolate all major branches and equipment",
-        "BestPractice": "Install valves both upstream/downstream of key assets",
+    "views_coordinated": {
+        "description": "Plan, section, and detail views are fully coordinated",
+        "category": "Combined",
+        "CESWI": "Clause 505.1.1",
+        "UUCESWI": "Drawing views must be consistent and referenced",
+        "BestPractice": "Cross-check dimensions and references between plan and section views",
         "diagnostic": {
-            "likely_cause": "Valve symbols omitted or generalised",
-            "risk": "System can't be isolated safely for repairs",
+            "likely_cause": "Separate drawings not aligned or missing coordination",
+            "risk": "Dimensions or features may not match across views causing build errors",
             "fix": [
-                "Add valves at pipe junctions and near plant interfaces",
-                "Ensure handle access is shown in plan"
+                "Align plan and section references (e.g., match lines, levels)",
+                "Use view references and cross-hatching consistently"
             ]
         }
     },
     "cable_trays": {
-        "description": "Cable tray routing shown, free of clashes",
+        "description": "Cable tray routing shown, free of clashes and obstructions",
         "category": "Electrical",
         "CESWI": "Clause 512.1.1",
         "UUCESWI": "Cable trays must not obstruct access or vents",
-        "BestPractice": "Use 90° bends, max 3% incline, labelled in section",
+        "BestPractice": "Use 90° bends and maintain max 3% incline, annotate in section",
         "diagnostic": {
-            "likely_cause": "Tray layout deferred to contractor",
-            "risk": "Unbuildable layout or overhead clashes",
+            "likely_cause": "Tray layout deferred to contractor or not drawn",
+            "risk": "Unbuildable cable runs or clashes with structure",
             "fix": [
-                "Add plan for main tray routes",
-                "Ensure clearance under structures"
+                "Add plan and elevation for main tray routes",
+                "Ensure adequate clearance under structural elements"
             ]
         }
     },
     "duct_spacing": {
-        "description": "Cable duct spacing and layout shown correctly",
+        "description": "Cable duct layout and spacing are correctly shown",
         "category": "Electrical",
         "CESWI": "Clause 512.1.2",
-        "UUCESWI": "Ducts to be spaced min 100mm apart",
-        "BestPractice": "Show on plan and typical trench detail",
+        "UUCESWI": "Ducts to be spaced minimum 100mm apart",
+        "BestPractice": "Show duct-bank layout and trench detail on plan",
         "diagnostic": {
-            "likely_cause": "Single duct shown, spacing unclear",
-            "risk": "Crowded ducts lead to future access issues",
+            "likely_cause": "Single duct shown with no spacing detail",
+            "risk": "Crowded ducts leading to installation difficulty",
             "fix": [
-                "Add duct bank layout and trench section",
-                "Specify spacing for HV/LV/comm"
+                "Annotate duct spacing and material sizes",
+                "Include typical duct bank cross-section with spacing"
+            ]
+        }
+    },
+    "drawpits": {
+        "description": "Drawpits and duct bends shown with required spacing and buildable layout",
+        "category": "Electrical",
+        "CESWI": "Clause 512.1.3",
+        "UUCESWI": "Conform to UU standards for drawpit construction",
+        "BestPractice": "Maintain at least 100mm clearance to walls and 300mm between HV and LV ducts",
+        "diagnostic": {
+            "likely_cause": "Drawpit geometry or duct bends not detailed",
+            "risk": "Installers may not be able to form drawpits or route cables as intended",
+            "fix": [
+                "Add plan and section of typical drawpit",
+                "Ensure bends and pull points are dimensioned and labelled"
+            ]
+        }
+    },
+    "pumps_equipment": {
+        "description": "Pumps, valves, and mechanical equipment fully detailed and accessible",
+        "category": "Mechanical",
+        "CESWI": "Clause 508.2.1",
+        "UUCESWI": "Locate valves to isolate major branches",
+        "BestPractice": "Include manufacturer data and clearance zones for equipment",
+        "diagnostic": {
+            "likely_cause": "Equipment detail omitted or generic symbols used",
+            "risk": "Incorrect equipment selection or inaccessible maintenance",
+            "fix": [
+                "Add equipment tags and detailed callouts for pumps and valves",
+                "Verify maintenance clearance around each item"
+            ]
+        }
+    },
+    "isolation_points": {
+        "description": "Electrical and mechanical isolation points clearly marked and labelled",
+        "category": "Electrical",
+        "CESWI": "Clause 512.5.2",
+        "UUCESWI": "Show all isolation valves and switches for circuits",
+        "BestPractice": "Use standard symbols and callouts for isolation devices",
+        "diagnostic": {
+            "likely_cause": "Isolation points not identified in drawing",
+            "risk": "Maintenance tasks may require unexpected shutdowns or are unsafe",
+            "fix": [
+                "Add valves and switch symbols to drawings",
+                "Label all isolation points with tag names"
             ]
         }
     },
     "sensor_positions": {
-        "description": "Sensors/instruments shown in accurate locations",
-        "category": "Instrumentation",
+        "description": "Sensors, instruments, and probes located correctly and logically",
+        "category": "Combined",
         "CESWI": "Clause 513.2.1",
         "UUCESWI": "Match sensor types to P&ID and field layout",
-        "BestPractice": "Include probe depths, mounting brackets",
+        "BestPractice": "Include probe depths and mounting details on drawings",
         "diagnostic": {
-            "likely_cause": "Sensor types not known at drawing time",
-            "risk": "Wrong sensor positions or installation delay",
+            "likely_cause": "Sensor locations not coordinated or generic",
+            "risk": "Incorrect sensor placement leading to control issues",
             "fix": [
-                "Mark probes, flowmeters, temp and pH sensors",
-                "Confirm heights and install methods"
-            ]
-        }
-    },
-    "flange_orientation": {
-        "description": "Flange bolt holes oriented correctly (12 o'clock)",
-        "category": "Mechanical",
-        "CESWI": "Clause 508.1.5",
-        "UUCESWI": "Flanges to align vertically where visible",
-        "BestPractice": "Add note: ‘Orient flange bolt holes to vertical’",
-        "diagnostic": {
-            "likely_cause": "Standard flange symbol used without orientation",
-            "risk": "Misaligned flanges cause site fit issues",
-            "fix": [
-                "Add flange orientation arrows or notes",
-                "Use UU STD flange detail"
-            ]
-        }
-    },
-    "fall_direction": {
-        "description": "Pipe gradients and fall direction shown and buildable",
-        "category": "Civils",
-        "CESWI": "Clause 505.3.2",
-        "UUCESWI": "Minimum falls per pipe size must be respected",
-        "BestPractice": "Show % fall on long section or next to pipe",
-        "diagnostic": {
-            "likely_cause": "Fall left implicit or forgotten",
-            "risk": "Backfalls or poor flow performance",
-            "fix": [
-                "Add pipe gradient next to size (e.g., 150mm @ 1.65%)",
-                "Confirm fall exceeds minimum"
-            ]
-        }
-    },
-    "access_for_maintenance": {
-        "description": "All equipment accessible for future maintenance",
-        "category": "Access",
-        "CESWI": "Clause 509.3.1",
-        "UUCESWI": "1m clearance minimum around maintainable equipment",
-        "BestPractice": "Mark hatch or shaded areas showing access zones",
-        "diagnostic": {
-            "likely_cause": "Maintenance access not considered in layout",
-            "risk": "Difficult or unsafe plant access",
-            "fix": [
-                "Draw 1m clearance around blowers, MCCs, valves",
-                "Add note: ‘Maintain access zone for operatives’"
+                "Mark sensor types (e.g., pH, flow, temperature) with callouts",
+                "Confirm sensor heights and access requirements on plan"
             ]
         }
     },
     "control_panels": {
-        "description": "Control panels located with clear cable paths",
+        "description": "Control panels coordinated with structure, access, and cabling",
         "category": "Electrical",
         "CESWI": "Clause 512.3.1",
-        "UUCESWI": "No panel to obstruct routes or overlap safety zones",
-        "BestPractice": "Show cable entry from floor/wall",
+        "UUCESWI": "No panel should obstruct routes or safety zones",
+        "BestPractice": "Show panel outline and door swing with cable entry paths",
         "diagnostic": {
-            "likely_cause": "Panel blocks or access areas not drawn",
-            "risk": "Delayed install or re-routing cables",
+            "likely_cause": "Panel footprint not drawn or crowding other elements",
+            "risk": "Cabling or access may require redesign on site",
             "fix": [
-                "Add panel outline to walls with door swing",
-                "Check space for maintenance and terminations"
+                "Add panel outlines to wall layouts with clearance zones",
+                "Verify enough space for cable termination and user access"
             ]
         }
     },
-    "bonding": {
-        "description": "Earthing, bonding, and lightning protection shown",
-        "category": "Electrical",
-        "CESWI": "Clause 512.5.1",
-        "UUCESWI": "See WIMES 1.02 for bonding requirement",
-        "BestPractice": "Bond all metallic pipe, tank, tray, support steel",
+    "civil_penetrations": {
+        "description": "All M&E penetrations shown and coordinated with civils",
+        "category": "Combined",
+        "CESWI": "Clause 502.2.4",
+        "UUCESWI": "All penetrations must be sleeved and waterproofed",
+        "BestPractice": "Use standard sleeve sizes (twice pipe OD) and show on drawing",
         "diagnostic": {
-            "likely_cause": "Earthing system designed separately",
-            "risk": "Electrical non-compliance or unsafe discharge",
+            "likely_cause": "M&E routes not overlaid on civils drawing or missing sleeves",
+            "risk": "Late coordination issues causing core drill or concrete breaks",
             "fix": [
-                "Add earthing/bonding symbol to all applicable assets",
-                "Include schematic of bonding system"
+                "Overlay M&E duct/pipe routes onto civil plans",
+                "Add cast-in penetration details or notations"
             ]
         }
     },
     "vent_routes": {
-        "description": "Vent and overflow pipes routed logically",
+        "description": "Vent and overflow routes logical, labelled, and clash-free",
         "category": "Mechanical",
         "CESWI": "Clause 508.4.1",
         "UUCESWI": "Overflows must not discharge to surface water",
-        "BestPractice": "Mark pipe ends with vent/overflow label",
+        "BestPractice": "Mark vent and overflow pipe ends with labels in plan",
         "diagnostic": {
-            "likely_cause": "Overflow/vent routes not coordinated",
-            "risk": "Discharge to wrong system or clash risk",
+            "likely_cause": "Vent/overflow routes not defined or coordinated",
+            "risk": "Discharge into wrong system or asset clashes causing backflow",
             "fix": [
-                "Ensure overflow connects to storm or return system",
-                "Add air valve and vent point details"
+                "Ensure overflow connects to correct drain or return system",
+                "Add air valve and vent point details with labels"
             ]
         }
     },
-    "buildability": {
-        "description": "Overall buildability of the drawing",
+    "bonding_earthing": {
+        "description": "Earthing, bonding, and lightning protection shown and compliant",
+        "category": "Electrical",
+        "CESWI": "Clause 512.5.1",
+        "UUCESWI": "See WIMES 1.02 for bonding and earthing requirements",
+        "BestPractice": "Bond all metallic pipes, tanks, cable trays, and support steel",
+        "diagnostic": {
+            "likely_cause": "Earthing details not included in M&E drawings",
+            "risk": "Electrical hazards or non-compliance with regulations",
+            "fix": [
+                "Add earthing/bonding symbols to relevant assets",
+                "Include schematic or notes of bonding system"
+            ]
+        }
+    },
+    "standards_compliance": {
+        "description": "Drawing complies with relevant CESWI/UUCESWI or WIMES standards",
         "category": "General",
-        "CESWI": "Clause 130.5.1",
-        "UUCESWI": "Designs must be constructable in logical sequence",
-        "BestPractice": "Pre-check constructability with site team",
+        "CESWI": "Clause 130.5.2",
+        "UUCESWI": "All drawings should meet CESWI and WIMES requirements",
+        "BestPractice": "List applicable standards in general notes or title block",
         "diagnostic": {
-            "likely_cause": "Designer unfamiliar with field build",
-            "risk": "Unbuildable or unsafe sequences",
+            "likely_cause": "Standards compliance not checked or documented",
+            "risk": "Drawing may violate design/specification requirements",
             "fix": [
-                "Add build stages or install order if complex",
-                "Review with construction team before IFC"
+                "Review drawing against CESWI, UUCESWI, and WIMES checklists",
+                "Add note confirming compliance with relevant standards"
             ]
         }
     },
-    "scope_defined": {
-        "description": "Scope of drawing clearly defined in title and notes",
+    "standard_details": {
+        "description": "United Utilities standard detail references are correctly applied",
         "category": "General",
-        "CESWI": "Clause 130.2.2",
-        "UUCESWI": "Title block to reflect actual scope",
-        "BestPractice": "Notes should define what is and isn’t included",
+        "CESWI": "Clause 505.1.1",
+        "UUCESWI": "All construction details must match UU standard references",
+        "BestPractice": "Use STD codes (e.g., STD6101) in callouts or notes",
         "diagnostic": {
-            "likely_cause": "Drawing title reused from prior version",
-            "risk": "Wrong assumptions by site team",
+            "likely_cause": "Generic or outdated detail references used",
+            "risk": "Non-compliant construction details causing inspection failures",
             "fix": [
-                "Update drawing title to match actual work shown",
-                "Use 'scope includes/excludes' note block"
+                "Update all detail callouts to current UU STD numbers",
+                "Include notes like 'See UU STD XXXX for detail'"
             ]
         }
     },
-    "methodology_link": {
-        "description": "Drawing coordinated with RAMS or method sequence",
+    "current_revision": {
+        "description": "Drawing is the current approved-for-construction revision",
         "category": "General",
-        "CESWI": "Clause 130.3.1",
-        "UUCESWI": "All critical works must align with method statement",
-        "BestPractice": "Add construction note if method matters",
+        "CESWI": "Clause 130.1.4",
+        "UUCESWI": "Only the current FOR CONSTRUCTION issue may be used on site",
+        "BestPractice": "Show revision and issue date on all title blocks and notes",
         "diagnostic": {
-            "likely_cause": "Drawing prepared in isolation from RAMS",
-            "risk": "Design contradicts safe or staged install",
+            "likely_cause": "Title block not updated or drawing version mismatched",
+            "risk": "Outdated design issued to site causing rework or errors",
             "fix": [
-                "Add build order or ‘Install A before B’ note",
-                "Reference RAMS ID or sheet"
+                "Confirm latest revision with document control",
+                "Clearly mark FOR CONSTRUCTION on current issue drawings"
             ]
         }
     },
-    "temporary_works": {
-        "description": "Notes on temporary works, if required",
-        "category": "General",
-        "CESWI": "Clause 130.4.1",
-        "UUCESWI": "TW required for any excavation >1.2m or backpropping",
-        "BestPractice": "Note TW by others, or add TW design reference",
-        "diagnostic": {
-            "likely_cause": "TW assumed outside design scope",
-            "risk": "Unsafe dig or unsupported structure",
-            "fix": [
-                "Note: ‘TW design by contractor’ or add detail",
-                "Add typical shoring if standard"
-            ]
-        }
-    },
-    "lifting_zones": {
-        "description": "Lifting access and exclusion zones identified",
-        "category": "Access",
-        "CESWI": "Clause 509.5.2",
-        "UUCESWI": "Exclusion zones required for overhead lifting",
-        "BestPractice": "Mark swing area and crane pads",
-        "diagnostic": {
-            "likely_cause": "Lifting route not planned in drawing stage",
-            "risk": "Unsafe lift or delayed method",
-            "fix": [
-                "Add note: 'Lifting zone to be cleared'",
-                "Use dashed line to mark lifting envelope"
-            ]
-        }
-    },
-    "fall_protection": {
-        "description": "Fall protection shown for open edges and platforms",
-        "category": "Access",
-        "CESWI": "Clause 509.1.4",
-        "UUCESWI": "Guardrails required for platforms above 600mm",
-        "BestPractice": "Show handrail, kickboard in side view",
-        "diagnostic": {
-            "likely_cause": "Platform design finalised separately",
-            "risk": "Open edge left unprotected on site",
-            "fix": [
-                "Add handrail symbol and height note",
-                "Confirm platform compliant to BS EN 13374"
-            ]
-        }
-    },
-      "referenced_drawings": {
+    "referenced_drawings": {
         "description": "Referenced drawings are listed and up to date",
         "category": "General",
         "CESWI": "Clause 130.6.1",
         "UUCESWI": "All drawings must show up-to-date references",
-        "BestPractice": "Reference all supporting drawings in a notes block",
+        "BestPractice": "Include drawing reference list in title block or notes",
         "diagnostic": {
-            "likely_cause": "Drawing index not maintained during revision",
-            "risk": "Construction based on outdated or conflicting drawings",
+            "likely_cause": "Drawing index not maintained during revisions",
+            "risk": "Construction based on outdated or missing drawings",
             "fix": [
-                "Add drawing reference list to title block or general notes",
-                "Cross-check with latest document issue register"
+                "Add or update drawing reference list on the drawing",
+                "Cross-check against the issue register for latest drawings"
             ]
         }
     },
-    "standard_detail_refs": {
-        "description": "UU standard detail references correctly applied",
-        "category": "Compliance",
-        "CESWI": "Clause 505.1.1",
-        "UUCESWI": "All construction details must match UU STD references",
-        "BestPractice": "Use STD codes like 'STD 6101' in callouts or notes",
+    "temporary_works": {
+        "description": "Notes on temporary works (shoring, phasing) are included if required",
+        "category": "General",
+        "CESWI": "Clause 130.4.1",
+        "UUCESWI": "Temporary works required for excavations >1.2m or unstable ground",
+        "BestPractice": "Add note 'TW design by others' or include typical shoring detail",
         "diagnostic": {
-            "likely_cause": "Generic or legacy detail callouts used",
-            "risk": "Non-compliant construction or rejected inspections",
+            "likely_cause": "Temporary works not considered in design drawings",
+            "risk": "Unsafe excavation or collapse during construction",
             "fix": [
-                "Update all detail references to current UU STD numbers",
-                "Include callout like 'See STD 6202 for thrust blocks'"
+                "Add general note on temporary works requirements",
+                "Include typical shoring or bracing details if applicable"
             ]
         }
     },
-    "omissions_or_ambiguities": {
-        "description": "Check for missing details or unclear instructions",
+    "safety_zones": {
+        "description": "Maintenance zones, lifting areas, and fall protection are clearly shown",
+        "category": "Combined",
+        "CESWI": "Clause 509.5.2",
+        "UUCESWI": "Exclusion zones required around lifting operations",
+        "BestPractice": "Mark lifting envelopes and guardrail lines on plan",
+        "diagnostic": {
+            "likely_cause": "Lifting/fall protection planning not included in drawing",
+            "risk": "Unsafe lifting operations or unprotected edges during construction",
+            "fix": [
+                "Add dashed lines for crane swing areas and clear zones",
+                "Include notes on required guardrails and harness anchor points"
+            ]
+        }
+    },
+    "scope_definition": {
+        "description": "Scope of work clearly defined in title block and general notes",
+        "category": "General",
+        "CESWI": "Clause 130.2.2",
+        "UUCESWI": "Title block should reflect actual work included",
+        "BestPractice": "Include notes 'Scope includes/excludes' or detail list in title block",
+        "diagnostic": {
+            "likely_cause": "Drawing title reused or generic, not updated for this revision",
+            "risk": "Site team may assume incorrect scope and perform extra or missing work",
+            "fix": [
+                "Update drawing title and scope notes to match actual design",
+                "Add a scope summary box or general notes entry"
+            ]
+        }
+    },
+    "construction_methodology": {
+        "description": "Drawing coordinated with construction methodology and RAMS",
+        "category": "General",
+        "CESWI": "Clause 130.3.1",
+        "UUCESWI": "Critical works should align with the method statement",
+        "BestPractice": "Add construction staging notes or references to RAMS documents",
+        "diagnostic": {
+            "likely_cause": "Designer worked without method statement guidance",
+            "risk": "Design may conflict with safe or staged construction sequence",
+            "fix": [
+                "Include notes on installation order (e.g., 'Install A before B')",
+                "Reference RAMS document numbers or section in notes"
+            ]
+        }
+    },
+    "services_buildable": {
+        "description": "All services, structures, and components are shown logically and are buildable",
+        "category": "Combined",
+        "CESWI": "Clause 130.5.1",
+        "UUCESWI": "Designs must be constructable in a logical sequence",
+        "BestPractice": "Review overall layout for clashes and sequence feasibility with site team",
+        "diagnostic": {
+            "likely_cause": "Layout was not reviewed for constructability",
+            "risk": "Unbuildable details or unsafe installation sequences go unnoticed",
+            "fix": [
+                "Walk through the build sequence with a modeller or foreman",
+                "Simplify overly complex intersections or details"
+            ]
+        }
+    },
+    "omissions_ambiguities": {
+        "description": "Check for any missing details, ambiguities, or risks on the drawing",
         "category": "General",
         "CESWI": "Clause 130.7.1",
-        "UUCESWI": "Designs must be unambiguous and complete",
-        "BestPractice": "Peer review all drawings before IFC",
+        "UUCESWI": "Designs must be complete and unambiguous",
+        "BestPractice": "Peer-review drawings or use checklist to catch omissions before IFC",
         "diagnostic": {
-            "likely_cause": "Drawing issued before full coordination",
-            "risk": "Site delays or unsafe improvisation",
+            "likely_cause": "Drawing issued without full coordination or review",
+            "risk": "Site delays or unsafe improvisation due to missing info",
             "fix": [
-                "Review drawing as if building from it with no assumptions",
-                "Add missing dimensions, notes, or views"
-            ]
-        }
-    },
-    "is_current_revision": {
-        "description": "Drawing is the current construction issue revision",
-        "category": "General",
-        "CESWI": "Clause 130.1.4",
-        "UUCESWI": "Only Rev ‘C’ or 'P## FOR CONSTRUCTION' may be used",
-        "BestPractice": "Show Rev and Issue Date on all pages",
-        "diagnostic": {
-            "likely_cause": "Rev not updated in title block or overwritten PDF",
-            "risk": "Outdated design issued to site",
-            "fix": [
-                "Confirm with document control which rev is latest",
-                "Add note: 'Do not use for construction unless status is current'"
+                "Review drawing in detail for missing dimensions or notes",
+                "Add any missing callouts, dimensions, or clarifying annotations"
             ]
         }
     }
 }
-
+```json
+{
+  "penetration_required": {
+    "description": "Wall sleeve required at each wall penetration",
+    "standard": "WIMES 3.02 Clause 2.1"
+  },
+  "pipe_clearance_min": {
+    "value": 300,
+    "unit": "mm",
+    "standard": "CESWI 7.3 Table 6.1"
+  },
+  "duct_clearance_min": {
+    "value": 100,
+    "unit": "mm",
+    "standard": "UUCESWI Issue 7 (min clearance between duct and structure)"
+  }
+}
 
 
 
