@@ -481,5 +481,4 @@ qa_checks = {
     }
 }
 }
-```json
 
