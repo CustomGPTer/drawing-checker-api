@@ -5,19 +5,33 @@ import pdfplumber
 import json
 
 def run_qa_checks(data: dict):
+    # Extract raw files
     dxf_bytes = data.get("dxf_bytes")
     pdf_bytes = data.get("pdf_bytes")
-    discipline = data.get("discipline", "").lower()
+
+    # Parse and sanitize all metadata fields
+    discipline = (data.get("discipline") or "combined").strip().lower()
+    drawing_id = str(data.get("drawing_id") or "Unknown").strip()
+    revision = str(data.get("revision") or "Unknown").strip()
+    drawing_title = str(data.get("drawing_title") or "Untitled").strip()
+    formats_received = str(data.get("formats_received") or "Unknown").strip()
+    drawing_type = str(data.get("drawing_type") or "Unspecified").strip()
+    drawing_status = str(data.get("drawing_status") or "Unspecified").strip()
+    notes = str(data.get("notes") or "").strip()
+
     results = []
 
-    with open("standards.json") as f:
+    # Load standards file (CESWI/UUCESWI/etc)
+    with open("standards.json", encoding="utf-8") as f:
         standards = json.load(f)
 
+    # Helper function to filter checks by discipline/category
     def check_applicable(category):
         if discipline == "combined":
             return True
         return category.lower() == discipline
 
+    # Append result to report list with optional diagnostic deep dive
     def add_result(check_key, result, explanation):
         check = qa_checks.get(check_key, {})
         category = check.get("category", "").lower()
