@@ -451,22 +451,4 @@ qa_checks = {
     }
 }
 ```json
-{
-  "penetration_required": {
-    "description": "Wall sleeve required at each wall penetration",
-    "standard": "WIMES 3.02 Clause 2.1"
-  },
-  "pipe_clearance_min": {
-    "value": 300,
-    "unit": "mm",
-    "standard": "CESWI 7.3 Table 6.1"
-  },
-  "duct_clearance_min": {
-    "value": 100,
-    "unit": "mm",
-    "standard": "UUCESWI Issue 7 (min clearance between duct and structure)"
-  }
-}
-
-
 
