@@ -1,0 +1,11 @@
+{
+  "penetration_required": {
+    "description": "Wall sleeves must be shown at all wall penetrations",
+    "standard": "WIMES 3.02 Clause 2.1"
+  },
+  "pipe_clearance_min": {
+    "value": 300,
+    "unit": "mm",
+    "standard": "CESWI 7.3 Table 6.1"
+  }
+}
