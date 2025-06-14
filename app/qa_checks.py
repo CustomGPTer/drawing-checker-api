@@ -449,6 +449,37 @@ qa_checks = {
             ]
         }
     }
+,
+"penetration_required": {
+    "description": "Wall sleeve required at each wall penetration",
+    "category": "Combined",
+    "CESWI": "Clause 502.2.4",
+    "UUCESWI": "WIMES 3.02 Clause 2.1",
+    "BestPractice": "Use sleeve pipe penetration details at all wall entries",
+    "diagnostic": {
+        "likely_cause": "Pipe or cable entering wall without protection",
+        "risk": "Leaks or structural damage from unsealed penetration",
+        "fix": [
+            "Add penetration detail showing sleeve and sealant",
+            "Check for clash with reinforcement or wall rebar zones"
+        ]
+    }
+},
+"pipe_clearance_min": {
+    "description": "Minimum clearance between pipe/duct and structure maintained",
+    "category": "Civils",
+    "CESWI": "Table 6.1",
+    "UUCESWI": "UUCESWI Issue 7 – 300mm clearance recommended",
+    "BestPractice": "Maintain 300mm minimum between pipe and structural wall/slab",
+    "diagnostic": {
+        "likely_cause": "Pipe route too close to concrete or foundation",
+        "risk": "Difficult installation or concrete breakout required",
+        "fix": [
+            "Shift pipe to maintain clearance zone",
+            "Update drawing to show minimum clearance callout"
+        ]
+    }
+}
 }
 ```json
 
