@@ -5,3 +5,4 @@ ezdxf
 pdfplumber
 markdownify
 python-multipart
+fuzzywuzzy
