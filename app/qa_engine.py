@@ -1,4 +1,4 @@
-from qa_checks import qa_checks
+from .qa_checks import qa_checks
 import ezdxf
 import io
 import pdfplumber
