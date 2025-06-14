@@ -51,5 +51,17 @@ def run_qa_checks(data: dict):
     else:
         results.append({"question": 3, "result": "⚠️ FLAG", "explanation": "No PDF file uploaded — status unknown"})
 
-    return results
+       # --- Generate Markdown Report ---
+    md = f"# QA Report – {data['drawing_id']}\n\n"
+    md += f"**Revision:** {data['revision']}\n\n"
+    md += "| No. | Result | Explanation |\n|-----|--------|-------------|\n"
+    for i, r in enumerate(results, start=1):
+        md += f"| {i} | {r['result']} | {r['explanation']} |\n"
+
+    return {
+        "summary": f"QA check complete for {data['drawing_id']}",
+        "results": results,
+        "report_markdown": md
+    }
+
 
