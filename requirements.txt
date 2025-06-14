@@ -4,3 +4,4 @@ pydantic
 ezdxf
 pdfplumber
 markdownify
+python-multipart
