@@ -9,15 +9,24 @@ def run_qa_checks(data: dict):
     dxf_bytes = data.get("dxf_bytes")
     pdf_bytes = data.get("pdf_bytes")
 
-    # Parse and sanitize all metadata fields
-    discipline = (data.get("discipline") or "combined").strip().lower()
-    drawing_id = str(data.get("drawing_id") or "Unknown").strip()
-    revision = str(data.get("revision") or "Unknown").strip()
-    drawing_title = str(data.get("drawing_title") or "Untitled").strip()
-    formats_received = str(data.get("formats_received") or "Unknown").strip()
-    drawing_type = str(data.get("drawing_type") or "Unspecified").strip()
-    drawing_status = str(data.get("drawing_status") or "Unspecified").strip()
-    notes = str(data.get("notes") or "").strip()
+    # 🔧 Helper: fallback-safe metadata parser
+    def safe_field(key, fallback):
+        val = data.get(key)
+        if val is None:
+            return fallback
+        if isinstance(val, str):
+            return val.strip()
+        return str(val).strip()
+
+    # ✅ Parse metadata safely – allows Custom GPTs to skip some fields
+    discipline = safe_field("discipline", "combined").lower()
+    drawing_id = safe_field("drawing_id", "Unknown")
+    revision = safe_field("revision", "Unknown")
+    drawing_title = safe_field("drawing_title", "Untitled")
+    formats_received = safe_field("formats_received", "Unknown")
+    drawing_type = safe_field("drawing_type", "Unspecified")
+    drawing_status = safe_field("drawing_status", "Unspecified")
+    notes = safe_field("notes", "")
 
     results = []
 
