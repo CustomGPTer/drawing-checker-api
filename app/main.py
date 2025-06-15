@@ -16,7 +16,7 @@ async def upload_and_check(
     drawing_status: str = Form(...),
     notes: Optional[str] = Form(None),
     dxf_file: UploadFile = File(...),
-    pdf_file: UploadFile = File(None)
+    pdf_file: UploadFile = File(...)
 ):
     # Read uploaded files
     dxf_content = await dxf_file.read()
