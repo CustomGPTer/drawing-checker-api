@@ -147,8 +147,7 @@ if unusual:
 
 md += "\n\n| No. | Result | Check | Explanation |\n|-----|--------|--------|-------------|\n"
 for r in results:
-md += "\n\n| No. | Result | Check | Explanation |\n|-----|--------|--------|-------------|\n"
-for r in results:
+
     md += f"| {r['question']} | {r['result']} | {r['check']} | {r['explanation']} |\n"
     if "deep_dive" in r:
         d = r["deep_dive"]
