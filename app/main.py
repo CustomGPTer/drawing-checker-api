@@ -42,3 +42,6 @@ async def upload_and_check(
         "results": result["results"],
         "report_markdown": result["report_markdown"]
     }
+@app.get("/")
+def read_root():
+    return {"message": "Hello, this is the Drawing QA Checker. Use POST /upload_and_check to run checks."}
