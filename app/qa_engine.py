@@ -147,6 +147,8 @@ if unusual:
 
 md += "\n\n| No. | Result | Check | Explanation |\n|-----|--------|--------|-------------|\n"
 for r in results:
+md += "\n\n| No. | Result | Check | Explanation |\n|-----|--------|--------|-------------|\n"
+for r in results:
     md += f"| {r['question']} | {r['result']} | {r['check']} | {r['explanation']} |\n"
     if "deep_dive" in r:
         d = r["deep_dive"]
@@ -157,7 +159,7 @@ for r in results:
         md += f"> - UUCESWI: {d['UUCESWI']}\n"
         md += f"> - Best Practice: {d['BestPractice']}\n"
         md += f"> Fix Options:\n"
- for fix in d["fix"]:
+        for fix in d["fix"]:
             md += f"> - {fix}\n"
 
 counts = {
@@ -166,20 +168,20 @@ counts = {
     "FAIL": sum(1 for r in results if r["result"] == "FAIL")
 }
 
-    md += "\n---\n\n## QA Summary\n"
-    for key, val in counts.items():
-        md += f"- {key}: {val}\n"
+md += "\n---\n\n## QA Summary\n"
+for key, val in counts.items():
+    md += f"- {key}: {val}\n"
 
-    flagged = [r for r in results if r["result"] in ["FAIL", "FLAG"]]
-    if flagged:
-        md += "\n## Final Verdict:\nDrawing requires revision due to:\n"
-        for r in flagged:
-            md += f"- {r['check']}: {r['explanation']}\n"
-    else:
-        md += "\n## Final Verdict:\nDrawing is buildable with no comments."
+flagged = [r for r in results if r["result"] in ["FAIL", "FLAG"]]
+if flagged:
+    md += "\n## Final Verdict:\nDrawing requires revision due to:\n"
+    for r in flagged:
+        md += f"- {r['check']}: {r['explanation']}\n"
+else:
+    md += "\n## Final Verdict:\nDrawing is buildable with no comments."
 
-    return {
-        "summary": f"QA check complete for {data.get('drawing_id', 'N/A')}",
-        "results": results,
-        "report_markdown": md
-    }
+return {
+    "summary": f"QA check complete for {drawing_id}",
+    "results": results,
+    "report_markdown": md
+}
