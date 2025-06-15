@@ -20,7 +20,7 @@ async def upload_and_check(
 ):
     # Read uploaded files
     dxf_content = await dxf_file.read()
-    pdf_content = await pdf_file.read() if pdf_file else None
+    pdf_content = await pdf_file.read()
 
     # Run QA checks using provided DXF/PDF contents and metadata
     result = run_qa_checks({
