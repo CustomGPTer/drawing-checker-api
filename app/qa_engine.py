@@ -121,23 +121,44 @@ def run_qa_checks(data: dict):
                 add_result(key, "FLAG", f"Check pipe clearance ≥ {standards['pipe_clearance_min']['value']} {standards['pipe_clearance_min']['unit']}")
             else:
                 add_result(key, "FLAG", "Check logic not implemented – flagged for manual review.")
+md = f"# QA Report – {drawing_id}\n\n"
+md += f"**Revision:** {revision}  \n"
+md += f"**Title:** {drawing_title}  \n"
+md += f"**Discipline (raw):** `{discipline}`  \n"
+md += f"**Drawing Type:** {drawing_type}  \n"
+md += f"**Status:** {drawing_status}  \n"
+md += f"**Formats Received:** {formats_received}  \n"
+if notes:
+    md += f"**Notes:** {notes}  \n"
 
-    md = f"# QA Report – {data.get('drawing_id', 'N/A')}\n\n"
-    md += f"**Revision:** {data.get('revision', 'Unknown')}\n\n"
-    md += "| No. | Result | Check | Explanation |\n|-----|--------|--------|-------------|\n"
-    for r in results:
-        md += f"| {r['question']} | {r['result']} | {r['check']} | {r['explanation']} |\n"
-        if "deep_dive" in r:
-            d = r["deep_dive"]
-            md += f"\n> Likely Cause: {d['likely_cause']}\n"
-            md += f"> Risk if Ignored: {d['risk']}\n"
-            md += f"> Guidance:\n"
-            md += f"> - CESWI: {d['CESWI']}\n"
-            md += f"> - UUCESWI: {d['UUCESWI']}\n"
-            md += f"> - Best Practice: {d['BestPractice']}\n"
-            md += f"> Fix Options:\n"
-            for fix in d["fix"]:
-                md += f"> - {fix}\n"
+# Tagging suspicious inputs (optional)
+unusual = []
+if discipline not in ["civils", "mechanical", "electrical", "combined"]:
+    unusual.append(f"⚠️ Unrecognised discipline: `{discipline}`")
+if drawing_status.lower() not in ["for construction", "tender", "for information", "unknown"]:
+    unusual.append(f"⚠️ Unusual drawing status: `{drawing_status}`")
+if formats_received.lower() not in ["pdf", "dxf", "both"]:
+    unusual.append(f"⚠️ Unexpected formats value: `{formats_received}`")
+
+if unusual:
+    md += "\n\n## ⚠️ Metadata Warnings\n"
+    for u in unusual:
+        md += f"- {u}\n"
+
+md += "\n\n| No. | Result | Check | Explanation |\n|-----|--------|--------|-------------|\n"
+for r in results:
+    md += f"| {r['question']} | {r['result']} | {r['check']} | {r['explanation']} |\n"
+    if "deep_dive" in r:
+        d = r["deep_dive"]
+        md += f"\n> Likely Cause: {d['likely_cause']}\n"
+        md += f"> Risk if Ignored: {d['risk']}\n"
+        md += f"> Guidance:\n"
+        md += f"> - CESWI: {d['CESWI']}\n"
+        md += f"> - UUCESWI: {d['UUCESWI']}\n"
+        md += f"> - Best Practice: {d['BestPractice']}\n"
+        md += f"> Fix Options:\n"
+        for fix in d["fix"]:
+            md += f"> - {fix}\n"
 
     counts = {
         "PASS": sum(1 for r in results if r["result"] == "PASS"),
