@@ -157,14 +157,14 @@ for r in results:
         md += f"> - UUCESWI: {d['UUCESWI']}\n"
         md += f"> - Best Practice: {d['BestPractice']}\n"
         md += f"> Fix Options:\n"
-        for fix in d["fix"]:
+ for fix in d["fix"]:
             md += f"> - {fix}\n"
 
-    counts = {
-        "PASS": sum(1 for r in results if r["result"] == "PASS"),
-        "FLAG": sum(1 for r in results if r["result"] == "FLAG"),
-        "FAIL": sum(1 for r in results if r["result"] == "FAIL"),
-    }
+counts = {
+    "PASS": sum(1 for r in results if r["result"] == "PASS"),
+    "FLAG": sum(1 for r in results if r["result"] == "FLAG"),
+    "FAIL": sum(1 for r in results if r["result"] == "FAIL")
+}
 
     md += "\n---\n\n## QA Summary\n"
     for key, val in counts.items():
